@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Resume form</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  </head>
+  <body>
+  <div class="main">
+    <div class="career">
+      <h1>Career Objective</h1>
+      <select id="career" name="career">
+        <option>select career objective</option>
+       <option>Seeking a challenging career with an MNC.</option>
+             <option> A highly organized and hard-working individual looking for a responsible position to gain practical experience.</option>
+              <option> To make use of my interpersonal skills to achieve goals of a company that focuses on customer satisfaction and customer experience.</option>
+            </select>
+    </div>
+    <div class="s1">
+      <h1>Personal Information</h1>
+      <input type="text" name="fname" id="fname" placeholder="enter firstname"><br>
+      <input type="text" name="lname" id="lname" placeholder="enter last name"><br>
+      <input type="number" name="mobile" id="mobile" placeholder="enter mobile no"><br>
+      <input type="text" name="email" id="email"placeholder="enter email id"><br>
+
+  </div>
+<div class="s1">
+  <h1>Graduation Details</h1>
+  <label for="gcourse">
+  <select id="gcourse" name="graduation" placeholder="select course">
+    <option>select course</option>
+    <option>B.Tech</option>
+    <option>B.Arch</option>
+    <option>Bsc</option>
+  </select>
+</label><br>
+<label for="gbranch">
+  <select id="gbranch" name="gbranch" placeholder="select branch">
+    <option>select branch</option>
+    <option>IT</option>
+    <option>CSE</option>
+    <option>ECE</option>
+    <option>CIVIL</option>
+  </select>
+</label><br>
+<label for="ginst">
+  <input type="text" id="ginst" name="ginst" placeholder="enter inst name"><br>
+</label><br>
+<label for="gper">
+  <input type="text" name="gper" id="gper" placeholder="enter percentage"><br>
+</label><br>
+<label for="gyear">
+  <input type="text" name="gyear" id="gyear" placeholder="enter year"><br>
+</label><br>
+</div>
+
+<div class="s1">
+  <h1>Intermediate/Diploma</h1>
+<label for="icourse">
+  <select id="icourse" name="icourse" placeholder="select course">
+    <option>select course</option>
+    <option>Intermediate</option>
+    <option>Diploma</option>
+  </select>
+</label><br>
+<label for="ibranch">
+  <select id="ibranch" name="ibranch" placeholder="select branch">
+    <option>select branch</option>
+    <option>MPC</option>
+    <option>BIPC</option>
+    <option>CEC</option>
+    <option>MEC</option>
+  </select>
+</label><br>
+<label for="iinst">
+  <input type="text" id="iinst" name="iinst" placeholder="enter inst name"><br>
+</label><br>
+<label for="iper">
+  <input type="text" name="iper" id="iper" placeholder="enter percentage"><br>
+</label><br>
+<label for="iyear">
+  <input type="text" name="iyear" id="iyear" placeholder="enter year"><br>
+</label><br>
+</div>
+<div class="s1">
+  <h1>SSC Details</h1>
+  <label for="scourse">
+    <select id="scourse" name="scourse" placeholder="select course">
+      <option>select course</option>
+      <option>SSC</option>
+      <option>CBSC</option>
+    </select>
+  </label><br>
+  <label for="sbranch">
+    <select id="sbranch" name="sbranch" placeholder="select branch">
+      <option>SSC</option>
+      <option>CBSC</option>
+    </select>
+  </label><br>
+  <label for="sinst">
+    <input type="text" id="sinst" name="sinst" placeholder="enter inst name"><br>
+  </label><br>
+  <label for="sper">
+    <input type="text" name="sper" id="sper" placeholder="enter percentage"><br>
+  </label><br>
+  <label for="syear">
+    <input type="text" name="syear" id="syear" placeholder="enter year"><br>
+  </label><br>
+</div>
+</div>
+<button type="button" name="button" onclick="submitdata()">SUBMIT</button>
+  </body>
+</html>
+<!--javascript-->
+<script type="text/javascript">
+function submitdata(){
+  var firstname;
+  var lastname;
+  var mobile;
+  var email;
+  var firstname=document.getElementById("fname").value;
+  var lastname=document.getElementById("lname").value;
+  var mobile=document.getElementById("mobile").value;
+  var email=document.getElementById("email").value;
+
+  var career=document.getElementById("career").value;
+  var ginstitute=document.getElementById("ginst").value;
+  var gcourse=document.getElementById("gcourse").value;
+  var gbranch=document.getElementById("gbranch").value;
+  var gyear=document.getElementById("gyear").value;
+  var gper=document.getElementById("gper").value;
+
+  var iinstitute=document.getElementById("iinst").value;
+  var icourse=document.getElementById("icourse").value;
+  var ibranch=document.getElementById("ibranch").value;
+  var iyear=document.getElementById("iyear").value;
+  var iper=document.getElementById("iper").value;
+
+  var sinstitute=document.getElementById("sinst").value;
+  var scourse=document.getElementById("scourse").value;
+  var sbranch=document.getElementById("sbranch").value;
+  var syear=document.getElementById("syear").value;
+  var sper=document.getElementById("sper").value;
+  //indexedDB
+  var request;
+  var open;
+  var store;
+  var result;
+  var tx;
+  var indexedDB=window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+request=indexedDB.open("mydatabase",1);
+//onerror
+request.onerror=function(e){
+  console.log("error"+e);
+}
+//onupgradeneeded
+request.onupgradeneeded=function(e){
+  result=e.target.result;
+  store=result.createObjectStore("resume",{keyPath:"name"});
+}
+//onsuccess
+request.onsuccess=function(e){
+  result=e.target.result;
+  tx=result.transaction("resume",'readwrite');
+  store=tx.objectStore("resume");
+  store.put(
+  {
+  career:career,
+  name:firstname,
+  lname:lastname,
+  mobile:mobile,
+  email:email,
+  education:[
+    {
+    course:gcourse,
+    branch:gbranch,
+    institute:ginstitute,
+    year:gyear,
+    percentage:gper
+  },
+  {
+    course:icourse,
+    branch:ibranch,
+    institute:iinstitute,
+    year:iyear,
+    percentage:iper
+  },
+  {
+    course:scourse,
+    branch:sbranch,
+    institute:sinstitute,
+    year:syear,
+    percentage:sper
+  }
+  ]
+});
+window.open("index.html");
+}
+}
+</script>
